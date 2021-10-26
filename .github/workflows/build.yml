@@ -22,9 +22,18 @@ jobs:
         sudo -E apt-get -qq update
         sudo timedatectl set-timezone "$TZ"
 
+    - name: Check out my repo
+      uses: actions/checkout@v2
+
     - name: Clone source code
       run: |
         git clone --recurse-submodules -b $BRANCH $REPO_URL libreelec
+
+    - name: Patch files
+      run: |
+        if [ -d files ];then
+            cp -rf files/* libreelec/
+        fi
 
     - name: Make image
       id: compile
