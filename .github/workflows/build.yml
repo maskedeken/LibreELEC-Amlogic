@@ -1,0 +1,54 @@
+name: Build LibreELEC.tv 10.x for AMLGX
+
+# Controls when the action will run. 
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  REPO_URL: https://github.com/LibreELEC/LibreELEC.tv
+  BRANCH: libreelec-10.0
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get -qq update
+        sudo timedatectl set-timezone "$TZ"
+
+    - name: Clone source code
+      run: |
+        git clone --recurse-submodules -b $BRANCH $REPO_URL libreelec
+
+    - name: Make image
+      id: compile
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image -j8
+
+    - name: Generate release tag
+      id: tag
+      run: |
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=status::success"
+
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        files: libreelec/target/*.gz
+
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 3
+
