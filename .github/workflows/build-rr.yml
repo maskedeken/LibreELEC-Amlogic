@@ -26,8 +26,38 @@ jobs:
       run: |
         git clone --recurse-submodules -b $BRANCH $REPO_URL libreelec
 
+    - name: Build toolchain
+      id: toolchain
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt toolchain
+
+    - name: Build MAME 2003 Plus
+      id: mame2003plus
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt libretro-mame2003_plus
+
+    - name: Build MAME 2010
+      id: mame2010
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt libretro-mame2010
+
+    - name: Build FireBurn Neo
+      id: fbneo
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt fbneo
+
+    - name: Build PPSSPP-SDL
+      id: ppsspp
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt ppsspp
+
     - name: Make image
-      id: compile
+      id: image
       run: |
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image -j8
