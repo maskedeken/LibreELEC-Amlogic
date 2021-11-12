@@ -30,7 +30,7 @@ jobs:
       id: compile
       run: |
         cd libreelec
-        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm DISTRO=LibreELEC-RR make image -j8
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image -j8
 
     - name: Generate release tag
       id: tag
