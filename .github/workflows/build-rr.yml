@@ -42,6 +42,7 @@ jobs:
       id: mame2010
       run: |
         cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/install zlib
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt libretro-mame2010
 
     - name: Build FireBurn Neo
