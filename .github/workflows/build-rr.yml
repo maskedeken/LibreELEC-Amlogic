@@ -75,6 +75,12 @@ jobs:
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt emulationstation
 
+    - name: Build Pegasus
+      id: pegasus
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt pegasus-frontend
+
     - name: Make image
       id: image
       run: |
