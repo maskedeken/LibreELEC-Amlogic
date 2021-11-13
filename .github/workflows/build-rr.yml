@@ -57,6 +57,12 @@ jobs:
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt ppsspp
 
+    - name: Build Openbor
+      id: openbor
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt openbor
+
     - name: Make image
       id: image
       run: |
