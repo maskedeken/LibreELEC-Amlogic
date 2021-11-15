@@ -25,6 +25,8 @@ jobs:
     - name: Clone source code
       run: |
         git clone --recurse-submodules -b $BRANCH $REPO_URL libreelec
+        cd libreelec
+        sed -i 's/LIBREELEC_VERSION="devel"/LIBREELEC_VERSION="RR"/' distributions/LibreELEC/version
 
     - name: Build toolchain
       id: toolchain
@@ -51,7 +53,7 @@ jobs:
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt fbneo
 
-    - name: Build PPSSPP-SDL
+    - name: Build PPSSPP
       id: ppsspp
       run: |
         cd libreelec
@@ -74,12 +76,6 @@ jobs:
       run: |
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt emulationstation
-
-    - name: Build Pegasus
-      id: pegasus
-      run: |
-        cd libreelec
-        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt pegasus-frontend
 
     - name: Make image
       id: image
