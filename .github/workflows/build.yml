@@ -25,9 +25,17 @@ jobs:
     - name: Clone source code
       run: |
         git clone --recurse-submodules -b $BRANCH $REPO_URL libreelec
+        cd libreelec
+        sed -i 's/LIBREELEC_VERSION="devel"/LIBREELEC_VERSION="Remake"/' distributions/LibreELEC/version
+
+    - name: Build toolchain
+      id: toolchain
+      run: |
+        cd libreelec
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt toolchain
 
     - name: Make image
-      id: compile
+      id: image
       run: |
         cd libreelec
         PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image -j8
