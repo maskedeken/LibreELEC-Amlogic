@@ -1,4 +1,4 @@
-name: Build LibreELEC.tv 10.x for AMLGX
+name: Build LibreELEC.tv 12.x for AMLGX
 
 # Controls when the action will run. 
 on:
@@ -7,12 +7,12 @@ on:
 
 env:
   REPO_URL: https://github.com/maskedeken/LibreELEC.tv
-  BRANCH: libreelec-10.0
+  BRANCH: libreelec-12.0
   TZ: Asia/Shanghai
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Initialization environment
