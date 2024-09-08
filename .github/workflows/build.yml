@@ -33,13 +33,13 @@ jobs:
       id: toolchain
       run: |
         cd libreelec
-        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build_mt toolchain
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm ./scripts/build toolchain
 
     - name: Make image
       id: image
       run: |
         cd libreelec
-        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image -j8
+        PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image
 
     - name: Generate release tag
       id: tag
